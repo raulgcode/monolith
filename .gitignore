@@ -1,0 +1,28 @@
+node_modules
+dist
+build
+.turbo
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea
+*.swp
+*.swo
+
+# Claude
+.claude/settings.local.json
+
+# React Router
+.react-router/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+packages/database/prisma/*.db
