@@ -31,36 +31,36 @@ pnpm dev
 
 ### Setup & Development
 
-| Command | Description |
-|---------|-------------|
+| Command              | Description                                                  |
+| -------------------- | ------------------------------------------------------------ |
 | `pnpm fresh-install` | Limpieza completa y reinstalación desde cero (Docker + deps) |
-| `pnpm bootstrap` | Configura pnpm localmente (primera vez / después de clonar) |
-| `pnpm setup` | Install deps, start DB, run migrations, seed, build packages |
-| `pnpm dev` | Start API (port 3000) and Web (port 5173) in dev mode |
-| `pnpm build` | Build all packages and apps for production |
-| `pnpm start` | Start all apps in production mode |
-| `pnpm format` | Format code with Prettier |
-| `pnpm typecheck` | Run TypeScript type checking |
-| `pnpm lint` | Run linters across all packages |
+| `pnpm bootstrap`     | Configura pnpm localmente (primera vez / después de clonar)  |
+| `pnpm setup`         | Install deps, start DB, run migrations, seed, build packages |
+| `pnpm dev`           | Start API (port 3000) and Web (port 5173) in dev mode        |
+| `pnpm build`         | Build all packages and apps for production                   |
+| `pnpm start`         | Start all apps in production mode                            |
+| `pnpm format`        | Format code with Prettier                                    |
+| `pnpm typecheck`     | Run TypeScript type checking                                 |
+| `pnpm lint`          | Run linters across all packages                              |
 
 ### Database
 
-| Command | Description |
-|---------|-------------|
-| `pnpm db:studio` | Open Prisma Studio GUI at localhost:5555 |
-| `pnpm db:push` | Push schema changes to DB (non-interactive) |
-| `pnpm db:migrate` | Create and run a new migration (interactive) |
-| `pnpm db:migrate:create` | Create a named migration |
-| `pnpm db:generate` | Regenerate Prisma Client |
-| `pnpm db:seed` | Seed the database with admin user |
-| `pnpm db:setup` | Push schema + seed (used by setup script) |
+| Command                  | Description                                  |
+| ------------------------ | -------------------------------------------- |
+| `pnpm db:studio`         | Open Prisma Studio GUI at localhost:5555     |
+| `pnpm db:push`           | Push schema changes to DB (non-interactive)  |
+| `pnpm db:migrate`        | Create and run a new migration (interactive) |
+| `pnpm db:migrate:create` | Create a named migration                     |
+| `pnpm db:generate`       | Regenerate Prisma Client                     |
+| `pnpm db:seed`           | Seed the database with admin user            |
+| `pnpm db:setup`          | Push schema + seed (used by setup script)    |
 
 ### Docker
 
-| Command | Description |
-|---------|-------------|
-| `docker compose up -d` | Start PostgreSQL container |
-| `docker compose down` | Stop PostgreSQL container |
+| Command                  | Description                           |
+| ------------------------ | ------------------------------------- |
+| `docker compose up -d`   | Start PostgreSQL container            |
+| `docker compose down`    | Stop PostgreSQL container             |
 | `docker compose down -v` | Stop and delete all data (full reset) |
 
 ## Project Structure
@@ -100,23 +100,26 @@ pnpm dev
 
 ## Default Credentials
 
-| Field | Value |
-|-------|-------|
-| Email | `admin@monolith.dev` |
-| Password | `Admin123!` |
+| Field    | Value                |
+| -------- | -------------------- |
+| Email    | `admin@monolith.dev` |
+| Password | `Admin123!`          |
 
 ## API Endpoints
 
 ### Auth (public)
+
 - `POST /auth/login` - Sign in, returns JWT
 - `POST /auth/register` - Create account, returns JWT
 
 ### Auth (protected)
+
 - `GET /auth/me` - Get current user
 - `GET /auth/profile` - Get JWT payload
 - `POST /auth/change-password` - Change password
 
 ### Users (protected)
+
 - `GET /users` - List all users
 - `GET /users/:id` - Get user by ID
 - `PUT /users/:id` - Update user
@@ -160,6 +163,7 @@ pnpm fresh-install
 ```
 
 **Este comando va a:**
+
 1. Detener y eliminar todos los contenedores Docker y volúmenes
 2. Eliminar node_modules en todos los workspaces
 3. Eliminar pnpm-lock.yaml y archivos de build
@@ -167,12 +171,14 @@ pnpm fresh-install
 5. Ejecutar setup completo (DB, migraciones, seed)
 
 **Cuándo usar fresh-install:**
+
 - Después de problemas con dependencias
 - Cuando el proyecto no arranca correctamente
 - Para limpiar completamente el entorno de desarrollo
 - Después de cambios importantes en package.json
 
 **Alternativa manual:**
+
 ```bash
 docker compose down -v
 rm -rf node_modules pnpm-lock.yaml .turbo .env
@@ -206,6 +212,7 @@ Corepack detecta esto automáticamente y usa esa versión específica.
 ### Flujo de trabajo
 
 **Primera vez:**
+
 ```bash
 git clone ...
 cd monolith
@@ -214,6 +221,7 @@ pnpm setup        # Instala todo y configura el proyecto
 ```
 
 **Después:**
+
 ```bash
 pnpm install      # Corepack usa la versión correcta automáticamente
 pnpm dev          # Desarrolla normalmente
@@ -221,12 +229,10 @@ pnpm dev          # Desarrolla normalmente
 
 ### Ventajas vs. pnpm global
 
-| Aspecto | Global | Con Corepack |
-|---------|--------|--------------|
-| Instalación | `npm i -g pnpm` | Automático |
-| Versión | Una para todo | Por proyecto |
-| Conflictos | Posibles | Ninguno |
-| Portabilidad | Manual | Automática |
-| Mantenimiento | Manual | Transparente |
-
-
+| Aspecto       | Global          | Con Corepack |
+| ------------- | --------------- | ------------ |
+| Instalación   | `npm i -g pnpm` | Automático   |
+| Versión       | Una para todo   | Por proyecto |
+| Conflictos    | Posibles        | Ninguno      |
+| Portabilidad  | Manual          | Automática   |
+| Mantenimiento | Manual          | Transparente |

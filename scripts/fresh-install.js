@@ -27,7 +27,7 @@ function run(cmd, options = {}) {
       stdio: 'inherit',
       cwd: ROOT,
       shell: true,
-      ...options
+      ...options,
     });
   } catch (error) {
     // Algunos comandos pueden fallar si los recursos no existen
@@ -54,13 +54,9 @@ try {
 
 // 2. Eliminar archivos de instalación
 step('2/4 - Eliminando archivos de instalación');
-const pathsToDelete = [
-  'node_modules',
-  'pnpm-lock.yaml',
-  '.turbo',
-];
+const pathsToDelete = ['node_modules', 'pnpm-lock.yaml', '.turbo'];
 
-pathsToDelete.forEach(path => {
+pathsToDelete.forEach((path) => {
   const fullPath = resolve(ROOT, path);
   if (existsSync(fullPath)) {
     console.log(`Eliminando: ${path}`);
@@ -70,15 +66,18 @@ pathsToDelete.forEach(path => {
 
 // Limpiar node_modules y builds en workspaces
 console.log('\nLimpiando workspaces...');
-run('find . -type d \\( -name "node_modules" -o -name "dist" -o -name "build" \\) -not -path "./node_modules/*" -exec rm -rf {} + 2>/dev/null || true', {
-  stdio: 'pipe',
-  allowFailure: true
-});
+run(
+  'find . -type d \\( -name "node_modules" -o -name "dist" -o -name "build" \\) -not -path "./node_modules/*" -exec rm -rf {} + 2>/dev/null || true',
+  {
+    stdio: 'pipe',
+    allowFailure: true,
+  },
+);
 
 // Limpiar archivos temporales de Claude
 run('rm -f tmpclaude* 2>/dev/null || true', {
   stdio: 'pipe',
-  allowFailure: true
+  allowFailure: true,
 });
 
 console.log('✓ Archivos de instalación eliminados');
