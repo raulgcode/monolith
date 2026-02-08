@@ -23,7 +23,7 @@ const setupSchema = z.object({
 export function meta() {
   return [
     { title: 'Initial Setup' },
-    { name: 'description', content: 'Set up your first admin account' }
+    { name: 'description', content: 'Set up your first admin account' },
   ];
 }
 
@@ -67,12 +67,8 @@ export async function action({ request }: Route.ActionArgs) {
     // Redirigir a login después de crear el usuario
     return redirect('/login');
   } catch (error: any) {
-    const message =
-      error?.response?.data?.message || 'Setup failed. Please try again.';
-    return data(
-      submission.reply({ formErrors: [message] }),
-      { status: 400 },
-    );
+    const message = error?.response?.data?.message || 'Setup failed. Please try again.';
+    return data(submission.reply({ formErrors: [message] }), { status: 400 });
   }
 }
 
@@ -95,9 +91,7 @@ export default function SetupPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Initial Setup</CardTitle>
-          <CardDescription>
-            Create your first admin account to get started
-          </CardDescription>
+          <CardDescription>Create your first admin account to get started</CardDescription>
         </CardHeader>
         <CardContent>
           <form method="post" id={form.id} onSubmit={form.onSubmit} className="space-y-4">
