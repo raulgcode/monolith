@@ -79,7 +79,11 @@ while (retries > 0) {
       console.error('PostgreSQL failed to start. Check docker compose logs.');
       process.exit(1);
     }
-    execSync('timeout /t 1 /nobreak >nul 2>&1 || sleep 1', { stdio: 'pipe', cwd: ROOT });
+    // Cross-platform sleep: use node's built-in setTimeout
+    const start = Date.now();
+    while (Date.now() - start < 1000) {
+      // Busy wait for 1 second
+    }
   }
 }
 
@@ -92,6 +96,7 @@ run('pnpm db:seed');
 // 6. Build shared packages
 step('6/6 - Building shared packages');
 run('pnpm --filter @monolith/shared build');
+run('pnpm --filter @monolith/themes build');
 run('pnpm --filter @monolith/database build');
 
 console.log(`

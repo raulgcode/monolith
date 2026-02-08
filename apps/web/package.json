@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@monolith/shared": "workspace:*",
+    "@monolith/themes": "workspace:*",
     "@conform-to/react": "^1.16.0",
     "@conform-to/zod": "^1.16.0",
     "@radix-ui/react-avatar": "^1.1.11",
