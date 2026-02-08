@@ -1,16 +1,31 @@
 import { Outlet, redirect, useLoaderData } from 'react-router';
 import { requireAuth } from '~/lib/auth.server';
-import { createAuthenticatedApi } from '~/lib/api';
+import { api, createAuthenticatedApi } from '~/lib/api';
 import { UserContext, type User } from '~/context';
 import { Navbar } from '~/components/navbar/navbar';
 import type { Route } from './+types/_layout';
 
 export async function loader({ request }: Route.LoaderArgs) {
+  // Primero verificar si necesita setup
+  try {
+    const setupResponse = await api.get('/auth/setup-status');
+    if (setupResponse.data.needsSetup) {
+      throw redirect('/setup');
+    }
+  } catch (error) {
+    // Si es un redirect, lanzarlo
+    if (error instanceof Response) {
+      throw error;
+    }
+    // Si hay error de red, continuar con la verificación de auth
+  }
+
+  // Verificar autenticación
   const token = await requireAuth(request);
 
   try {
-    const api = createAuthenticatedApi(token);
-    const response = await api.get('/auth/me');
+    const authenticatedApi = createAuthenticatedApi(token);
+    const response = await authenticatedApi.get('/auth/me');
     return { user: response.data as User };
   } catch {
     throw redirect('/login');

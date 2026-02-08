@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma.service';
@@ -103,6 +103,48 @@ export class AuthService {
     });
 
     return { message: 'Password changed successfully' };
+  }
+
+  async getSetupStatus() {
+    const userCount = await this.prisma.user.count();
+    return {
+      needsSetup: userCount === 0,
+      hasUsers: userCount > 0,
+    };
+  }
+
+  async setupFirstUser(email: string, password: string, name: string) {
+    // CRÍTICO: Verificar que NO hay usuarios
+    const userCount = await this.prisma.user.count();
+
+    if (userCount > 0) {
+      throw new ConflictException('Setup already completed');
+    }
+
+    if (!email || !password || !name) {
+      throw new BadRequestException('Email, password and name are required');
+    }
+
+    const hashedPassword = await this.hashPassword(password);
+
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        name,
+        isActive: true,
+      },
+    });
+
+    // NO retornar access_token (forzar login manual)
+    return {
+      message: 'Setup completed successfully',
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+    };
   }
 
   private async hashPassword(password: string): Promise<string> {

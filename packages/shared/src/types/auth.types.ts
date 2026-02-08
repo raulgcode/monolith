@@ -32,3 +32,23 @@ export interface JwtPayload {
   iat?: number;
   exp?: number;
 }
+
+export interface SetupStatusResponse {
+  needsSetup: boolean;
+  hasUsers: boolean;
+}
+
+export interface SetupRequest {
+  email: string;
+  password: string;
+  name: string;
+}
+
+export interface SetupResponse {
+  message: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+  };
+}

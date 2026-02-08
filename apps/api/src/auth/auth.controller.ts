@@ -35,4 +35,16 @@ export class AuthController {
   ) {
     return this.authService.changePassword(req.user.sub, body.currentPassword, body.newPassword);
   }
+
+  @Public()
+  @Get('setup-status')
+  async getSetupStatus() {
+    return this.authService.getSetupStatus();
+  }
+
+  @Public()
+  @Post('setup')
+  async setupFirstUser(@Body() body: { email: string; password: string; name: string }) {
+    return this.authService.setupFirstUser(body.email, body.password, body.name);
+  }
 }

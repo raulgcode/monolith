@@ -1,26 +1,15 @@
 import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = process.env.ADMIN_EMAIL || 'admin@monolith.dev';
-  const password = process.env.ADMIN_PASSWORD || 'Admin123!';
+  console.log('Seed started...');
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  // Aquí se pueden agregar datos de ejemplo para otras tablas
+  // NO crear usuarios por defecto
 
-  const user = await prisma.user.upsert({
-    where: { email },
-    update: {},
-    create: {
-      email,
-      password: hashedPassword,
-      name: 'Admin',
-      isActive: true,
-    },
-  });
-
-  console.log(`Seed complete. Admin user: ${user.email}`);
+  console.log('Seed complete. No default users created.');
+  console.log('Run the application and access /setup to create the first admin user.');
 }
 
 main()
