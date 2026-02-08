@@ -16,7 +16,7 @@ build
 
 # Claude
 .claude/settings.local.json
-
+tmpclaude*
 # React Router
 .react-router/
 

@@ -5,6 +5,8 @@
   "type": "module",
   "packageManager": "pnpm@10.4.1",
   "scripts": {
+    "fresh-install": "node scripts/fresh-install.js",
+    "bootstrap": "node scripts/bootstrap.js",
     "setup": "node scripts/setup.js",
     "dev": "turbo run dev",
     "build": "turbo run build",
