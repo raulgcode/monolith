@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ThemeScript />
       </head>
       <body>
-        <ThemeProvider defaultTheme="system" storageKey="monolith-theme">
+        <ThemeProvider defaultTheme="gradient" defaultMode="system" storageKey="monolith">
           {children}
         </ThemeProvider>
         <ScrollRestoration />

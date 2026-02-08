@@ -11,6 +11,7 @@ import {
 } from '~/components/ui/dropdown-menu';
 import { Separator } from '~/components/ui/separator';
 import { ThemeToggle } from './theme-toggle';
+import { ThemeSelector } from './theme-selector';
 import type { User } from '~/context';
 
 interface NavbarProps {
@@ -50,6 +51,7 @@ export function Navbar({ user }: NavbarProps) {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <ThemeSelector />
           <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

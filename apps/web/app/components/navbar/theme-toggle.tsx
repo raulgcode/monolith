@@ -16,24 +16,24 @@ const labels = {
 };
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { mode, setMode } = useTheme();
 
-  const cycleTheme = () => {
-    const themes: Array<'system' | 'light' | 'dark'> = ['system', 'light', 'dark'];
-    const currentIndex = themes.indexOf(theme);
-    const nextIndex = (currentIndex + 1) % themes.length;
-    setTheme(themes[nextIndex]);
+  const cycleMode = () => {
+    const modes: Array<'system' | 'light' | 'dark'> = ['system', 'light', 'dark'];
+    const currentIndex = modes.indexOf(mode);
+    const nextIndex = (currentIndex + 1) % modes.length;
+    setMode(modes[nextIndex]);
   };
 
-  const Icon = icons[theme];
+  const Icon = icons[mode];
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={cycleTheme}
-      title={labels[theme]}
-      aria-label={`Current theme: ${labels[theme]}. Click to cycle.`}
+      onClick={cycleMode}
+      title={labels[mode]}
+      aria-label={`Current mode: ${labels[mode]}. Click to cycle.`}
     >
       <Icon className="h-5 w-5" />
     </Button>

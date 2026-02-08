@@ -22,13 +22,35 @@ export interface ThemeColors {
   ring: string;
 }
 
-export interface ThemeDefinition {
+// Base theme definition (no inheritance)
+export interface BaseThemeDefinition {
   id: string;
   name: string;
-  colors: ThemeColors;
+  description?: string;
+  light: ThemeColors;
+  dark: ThemeColors;
   radius?: string;
 }
 
+// Extended theme definition (with inheritance)
+export interface ExtendedThemeDefinition {
+  id: string;
+  name: string;
+  description?: string;
+  extends: string; // Parent theme ID
+  light: Partial<ThemeColors>; // Override specific colors
+  dark: Partial<ThemeColors>;
+  radius?: string;
+}
+
+export type ThemeDefinition = BaseThemeDefinition | ExtendedThemeDefinition;
+
+// Theme registry
+export interface ThemeRegistry {
+  [themeId: string]: ThemeDefinition;
+}
+
+// Legacy interface for backwards compatibility
 export interface ThemeConfig {
   themes: {
     light: ThemeDefinition;
